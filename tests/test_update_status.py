@@ -1,0 +1,21 @@
+from fastapi.testclient import TestClient
+from app.main import app
+
+client = TestClient(app)
+def test_update_status():
+    response = client.post(
+        "/tasks",
+        json={
+            "title": "Task",
+            "description": "Task description",
+        }
+    )
+    task = response.json()
+    response = client.post(
+        f"/tasks/{task['id']}/status",
+        json={
+            "status": "done"
+        }
+    )
+    assert response.status_code == 200
+    assert response.json()["status"] == "done"
