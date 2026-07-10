@@ -11,7 +11,7 @@ def test_update_status():
         }
     )
     task = response.json()
-    response = client.post(
+    response = client.patch(
         f"/tasks/{task['id']}/status",
         json={
             "status": "done"
